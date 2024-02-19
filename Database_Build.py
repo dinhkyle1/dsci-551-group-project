@@ -83,9 +83,9 @@ audio_elements = spotify_data[audio_elements_cols]
 # In[5]:
 
 
-os.environ['SONG_METADATA_CREDENTIALS'] = '/Users/Aj/Desktop/1. USC/DSCI 551/Final Project/song-metadata-firebase-adminsdk-btuvh-566501283b.json'
+os.environ['SONG_METADATA_CREDENTIALS'] = 'YOUR PATH TO firebases JSON SONG-METADATA.json'
 
-os.environ['AUDIO_ELEMENTS_CREDENTIALS'] = '/Users/Aj/Desktop/1. USC/DSCI 551/Final Project/audio-elements-e5904-firebase-adminsdk-r7rx3-0f204af2c1.json'
+os.environ['AUDIO_ELEMENTS_CREDENTIALS'] = 'YOUR PATH TO firebases JSON AUDIO-ELEMENTS.json'
 
 
 # In[6]:
