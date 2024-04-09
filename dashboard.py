@@ -7,46 +7,44 @@ def hash_fun(track_id):
 
 # Define database connection URLs with ports for each database
 database_urls = {
-    "song_elements_0": "mongodb://3.18.103.247:27017/song_elements_0",
-    "song_elements_1": "mongodb://3.18.103.247:27017/song_elements_1",
-    "audio_elements_0": "mongodb://3.18.103.247:27017/audio_elements_0",
-    "audio_elements_1": "mongodb://3.18.103.247:27017/audio_elements_1"
+    "song_metadata_0": "mongodb://Dsci-551:Dsci-551@3.18.103.247:27017/",
+    "song_metadata_1": "mongodb://Dsci-551:Dsci-551@3.18.103.247:27017/",
+    "audio_elements_0": "mongodb://Dsci-551:Dsci-551@3.18.103.247:27017/",
+    "audio_elements_1": "mongodb://Dsci-551:Dsci-551@3.18.103.247:27017/"
 }
 
 # Connect to the MongoDB databases
 mongo_clients = {db: MongoClient(database_urls[db]) for db in database_urls}
 
 # Streamlit UI
-st.title('Spotify Tracks Distributed Database ')
+st.markdown('# Spotify Tracks Distributed Database')
 
-# Display current data from the MongoDB databases
-rows = []
-for db_name in mongo_clients:
-    # Connect to MongoDB 
-    client = MongoClient(database_urls[db_name])
+# Display tables in a single column
+for db_name, client in mongo_clients.items():
     # Choose the database
-    database = client.get_default_database()
+    database = client[db_name]
     # Choose the collection
     collection = database["song"]
-    # Query data from the collection and add to rows list
-    data = list(collection.find())
-    rows.append([f"{db_name.capitalize()} Database"])
-    print(f"First five elements in {db_name}:", data[:5])  # Print first five elements
-    for item in data:
-        rows.append(item)
-    # Close the connection
-    client.close()
+    # Query data from the collection
+    data = list(collection.find().limit(100))  # Displaying only the first 100 records
 
-# Display tables in a 2x2 grid
-num_rows = len(rows)
-num_cols = 2
-row_index = 0
-for i in range(num_rows // num_cols + 1):
-    cols = st.columns(num_cols)
-    for j in range(num_cols):
-        if row_index < num_rows:
-            if isinstance(rows[row_index], str):
-                cols[j].subheader(rows[row_index])
-            else:
-                cols[j].table([rows[row_index]])
-            row_index += 1
+    st.markdown(f'## {db_name.capitalize()} Database')
+
+    # Convert data to HTML table with scrollbar
+    html_table = f"<div style='max-height:400px; max-width:1200px; overflow:auto;'><table style='width:100%;'>"
+    html_table += "<tr>"
+    for col in data[0]:
+        html_table += f"<th>{col}</th>"
+    html_table += "</tr>"
+    for row in data:
+        html_table += "<tr>"
+        for val in row.values():
+            html_table += f"<td>{val}</td>"
+        html_table += "</tr>"
+    html_table += "</table></div>"
+
+    st.write(html_table, unsafe_allow_html=True)
+
+# Close the connections
+for client in mongo_clients.values():
+    client.close()

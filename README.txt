@@ -5,6 +5,7 @@ pip install pymongo
 To run:
 streamlit run dashboard.py
 
+MongoClient("mongodb://Dsci-551:Dsci-551@3.18.103.247:27017/")
 'mongodb://3.18.103.247:27017/'
 
 def hash_fun(track_id): #hash function
