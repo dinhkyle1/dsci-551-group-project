@@ -1,5 +1,7 @@
 import streamlit as st
 from pymongo import MongoClient
+from streamlit_option_menu import option_menu
+
 
 # Hash function to determine which database to interact with based on track_id
 def hash_fun(track_id):
@@ -7,17 +9,17 @@ def hash_fun(track_id):
 
 # Define database connection URLs with ports for each database
 database_urls = {
-    "song_metadata_0": "mongodb://Dsci-551:Dsci-551@3.18.103.247:27017/",
-    "song_metadata_1": "mongodb://Dsci-551:Dsci-551@3.18.103.247:27017/",
-    "audio_elements_0": "mongodb://Dsci-551:Dsci-551@3.18.103.247:27017/",
-    "audio_elements_1": "mongodb://Dsci-551:Dsci-551@3.18.103.247:27017/"
+    "song_metadata_0": "mongodb://Dsci-551:Dsci-551@18.218.162.125:27017/",
+    "song_metadata_1": "mongodb://Dsci-551:Dsci-551@18.218.162.125:27017/",
+    "audio_elements_0": "mongodb://Dsci-551:Dsci-551@18.218.162.125:27017/",
+    "audio_elements_1": "mongodb://Dsci-551:Dsci-551@18.218.162.125:27017/"
 }
 
 # Connect to the MongoDB databases
 mongo_clients = {db: MongoClient(database_urls[db]) for db in database_urls}
 
 # Streamlit UI
-st.markdown('# Spotify Tracks Distributed Database')
+st.set_page_config(page_title="Spotify Tracks Distributed Database", layout="wide")
 
 # Function to validate input fields
 def validate_input(input_data):
@@ -79,14 +81,16 @@ with st.sidebar:
 
 # Display tables in a single column
 for db_name, client in mongo_clients.items():
-    # Choose the database
+    st.markdown(f"<h2 style='color: #1DB954;'>{db_name.capitalize()} Database</h2>", unsafe_allow_html=True)
+
+    # Choose the database and collection
     database = client[db_name]
-    # Choose the collection
     collection = database["song"]
-    # Query data from the collection
+
+   # Query data from the collection
     data = list(collection.find().limit(100))  # Displaying only the first 100 records
 
-    st.markdown(f'## {db_name.capitalize()} Database')
+    # st.markdown(f'## {db_name.capitalize()} Database')
 
     # Convert data to HTML table with scrollbar
     html_table = f"<div style='max-height:400px; max-width:1200px; overflow:auto;'><table style='width:100%;'>"
@@ -106,3 +110,5 @@ for db_name, client in mongo_clients.items():
 # Close the connections
 for client in mongo_clients.values():
     client.close()
+
+
