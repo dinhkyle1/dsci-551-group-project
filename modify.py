@@ -1,7 +1,5 @@
 import streamlit as st
 from pymongo import MongoClient
-from streamlit_option_menu import option_menu
-
 
 # Hash function to determine which database to interact with based on track_id
 def hash_fun(track_id):
@@ -27,6 +25,24 @@ def validate_input(input_data):
     if not input_data["track_id"]:
         errors.append("Track ID cannot be blank.")
     return errors
+
+# Light to dark theme toggle
+theme = st.sidebar.checkbox("Dark Mode", False, key="theme", help="Toggle dark mode")
+
+# Apply dark mode theme if selected
+if theme:
+    st.markdown(
+        """
+        <style>
+        /* Dark mode CSS */
+        body, .stApp {
+            color: #f8f9fa;
+            background-color: #343a40;
+        }
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
 
 # Insert button and entry fields in the sidebar
 with st.sidebar:
@@ -110,5 +126,3 @@ for db_name, client in mongo_clients.items():
 # Close the connections
 for client in mongo_clients.values():
     client.close()
-
-
