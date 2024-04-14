@@ -30,4 +30,8 @@ def display_database(mongo_clients, db_key):
         st.dataframe(data)
 
 if __name__ == "__main__":
+<<<<<<< HEAD
     show_view_page()
+=======
+    show_view_page()
+>>>>>>> frontend

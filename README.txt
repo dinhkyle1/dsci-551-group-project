@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 DSCI-551-GROUP-PROJECT/
+=======
+DSCI-551-Group-Project/
+>>>>>>> frontend
 │
 ├── app.py               # Main application script to run the entire application
 ├── common_ui.py         # Common UI components (headers, sidebars)
@@ -7,6 +11,7 @@ DSCI-551-GROUP-PROJECT/
 ├── modify.py            # Script for the "CRUD Operations" functionality
 └── filter.py            # Script for the "Filter Data" functionality
 
+<<<<<<< HEAD
 
 Install:
 pip install streamlit
@@ -16,7 +21,32 @@ pip install pymongo
 
 To run:
 streamlit run app.py
+=======
+app.py: This is the main application script. It will import functions from view.py, modify.py, and filter.py 
+to provide the functionality for each section for the Spotify Management System application.
 
+common_ui.py: Contains UI functions that can be reused across all scripts; such as headers and sidebars.
+
+mongo_utils.py: Manages MongoDB connections. This provides a function to connect to the databases, 
+helps in avoiding repeated code across scripts that need database access.
+
+view.py: Contains functions to view Spotify databases for userability.
+
+modify.py: Contains userability functions of CRUD Operation such as insert, modify, delete data.
+
+filter.py: Contains userability functions for filtering data by specific attributes. 
+
+
+Set up environment: 
+pip install streamlit
+pip install pymongo
+
+Run application:
+streamlit run app.py
+
+>>>>>>> frontend
+
+Mongo Connection: 
 MongoClient("mongodb://Dsci-551:Dsci-551@3.18.103.247:27017/")
 'mongodb://3.18.103.247:27017/'
 
