@@ -19,19 +19,33 @@ audio_elements_cols = ["track_id", "popularity", "danceability", "energy", "key"
 # Connect to the MongoDB databases
 mongo_client = MongoClient(database_url)
 
-page = st.sidebar.selectbox("Select a Database", ("Home", "Song Metadata", "Audio Elements"))
+# def set_widget_width():
+#     st.markdown(
+#         """
+#         <style>
+#         /* Targeting all text areas */
+#         .stTextArea textarea {
+#             height: 150px; /* Adjust height */
+#             width: 100%; /* Full width */
+#         }
+#         </style>
+#         """, unsafe_allow_html=True)
+
+# set_widget_width()
+
+# page = st.sidebar.selectbox("Select a Database", ("Home", "Song Metadata", "Audio Elements"))
 
 if "page" not in st.session_state:
     st.session_state.page = "Home"
 
-page_metadata = st.sidebar.selectbox("Metadata Attributes", ("none", "track_id", "artists", "album_name", "track_name", "track_genre"))
+# page_metadata = st.sidebar.selectbox("Metadata Attributes", ("none", "track_id", "artists", "album_name", "track_name", "track_genre"))
 
 if "page_metadata" not in st.session_state:
     st.session_state.page_metadata = "none"
 
-page_elements = st.sidebar.selectbox("Element Attributes", ("none", "track_id", "popularity", "danceability", "energy", "key", "loudness",
-                       "mode", "speechiness", "acousticness", "instrumentalness", "liveness",
-                       "valence", "tempo", "time_signature"))
+# page_elements = st.sidebar.selectbox("Element Attributes", ("none", "track_id", "popularity", "danceability", "energy", "key", "loudness",
+#                        "mode", "speechiness", "acousticness", "instrumentalness", "liveness",
+#                        "valence", "tempo", "time_signature"))
 
 if "page_elements" not in st.session_state:
     st.session_state.page_elements = "none"
@@ -820,6 +834,52 @@ if st.session_state.page == "Audio Elements":
 for i in range(5):
     st.text("")
 
+if "show_text_box" not in st.session_state:
+    st.session_state.show_text_box = False
+
+
+if st.button("Generate Spotify Links"):
+    st.session_state.show_text_box = True
+
+if st.session_state.show_text_box:
+    spotify_ids = st.text_area("Enter Spotify IDs", help = "Keep IDs on different lines")
+    spotify_ids_lst = spotify_ids.split("\n")
+    empty = True
+    
+    if spotify_ids:
+        for spotify_id in spotify_ids_lst:
+            spotify_id = spotify_id.strip()
+            
+            hash = hash_fun(spotify_id)
+            if hash == 0:
+                database = mongo_client["song_metadata_0"]
+            else:
+                database = mongo_client["song_metadata_1"]
+                    
+            collection = database["song"]
+            data = list(collection.find({"_id": spotify_id}))
+                
+            if data == []:
+                empty = False
+                break
+                
+        if not empty:
+            st.markdown("<h1 style='text-align: center;'>Insert Valid IDs</h1>", unsafe_allow_html=True)
+        else:  
+            for spotify_id in spotify_ids_lst:
+                spotify_id = spotify_id.strip()
+                st.markdown(f"{spotify_id}: https://open.spotify.com/track/{spotify_id}", unsafe_allow_html = True)
+
+with col5:
+    pass
+with col2:
+    pass
+with col4:
+    pass
+
+for i in range(5):
+    st.text("")
+
 col1, col2, col3, col4, col5 = st.columns(5)
 with col1:
     pass
@@ -828,6 +888,7 @@ with col3:
         st.session_state.page = "Home"
         st.session_state.page_metadata = "none"
         st.session_state.page_elements = "none"
+        st.session_state.show_text_box = False
 with col5:
     pass
 with col2:
