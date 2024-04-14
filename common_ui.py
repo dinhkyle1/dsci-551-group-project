@@ -114,3 +114,4 @@ def apply_light_theme():
     """ Applies the light theme CSS. """
     st.markdown(light_theme_css(), unsafe_allow_html=True)
 
+

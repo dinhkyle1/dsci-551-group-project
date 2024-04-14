@@ -31,4 +31,3 @@ def display_database(mongo_clients, db_key):
 
 if __name__ == "__main__":
     show_view_page()
-
