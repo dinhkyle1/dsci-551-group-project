@@ -1,9 +1,21 @@
-I installed:
+DSCI-551-GROUP-PROJECT/
+│
+├── app.py               # Main application script to run the entire application
+├── common_ui.py         # Common UI components (headers, sidebars)
+├── mongo_utils.py       # MongoDB connection utilities
+├── view.py              # Script for the "View Databases" functionality
+├── modify.py            # Script for the "CRUD Operations" functionality
+└── filter.py            # Script for the "Filter Data" functionality
+
+
+Install:
 pip install streamlit
 pip install pymongo
 
+
+
 To run:
-streamlit run dashboard.py
+streamlit run app.py
 
 MongoClient("mongodb://Dsci-551:Dsci-551@3.18.103.247:27017/")
 'mongodb://3.18.103.247:27017/'
