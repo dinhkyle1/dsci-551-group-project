@@ -39,4 +39,9 @@ def hash_fun(track_id):
     pass
 
 if __name__ == "__main__":
+# <<<<<<< HEAD
     show_crud_operations()
+
+# =======
+#     show_crud_operations()
+# >>>>>>> frontend
