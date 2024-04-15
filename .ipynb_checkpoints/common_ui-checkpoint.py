@@ -30,24 +30,6 @@ def dark_theme_css():
             .stButton > button {
                 border: 1px solid var(--text-color);
             }
-            .stTextInput > div > div > input {
-                color: var(--text-color) !important;
-            }
-            .stTextInput > label {
-                color: var(--text-color);
-            }
-            .stNumberInput > div > div > div > input {
-                color: var(--text-color) !important;
-            }
-            .stNumberInput > label {
-                color:var(--text-color) !important;
-            }
-            .stTextArea > label {
-                color: var(--text-color) !important;
-            }
-            .stTextArea > div > div > div > textarea {
-                color: var(--text-color) !important;
-            }
             /* Additional styling rules for other elements as needed */
         </style>
     '''

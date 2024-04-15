@@ -24,7 +24,7 @@ def show_filter_page():
     if "page_elements" not in st.session_state:
         st.session_state.page_elements = "none"
 
-    st.markdown("<h1 style='color:#1DB954; text-align:center;'>Query Spotify Databases</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align:center;'>Query Spotify Databases</h1>", unsafe_allow_html=True)
 
     for i in range(3):
         st.text("")
@@ -45,7 +45,7 @@ def show_filter_page():
     
     if st.session_state.page == "Song Metadata":
         st.session_state.page_elements = "none"
-        st.markdown("<h1 style='color:#1DB954; text-align:center;'>Choose the Attribute to Query</h1>", unsafe_allow_html=True)
+        st.markdown("<h1 style='text-align:center;'>Choose the Attribute to Query</h1>", unsafe_allow_html=True)
         
         for i in range(3):
             st.text("")
@@ -96,8 +96,8 @@ def show_filter_page():
                     st.write(html_table, unsafe_allow_html=True)
                     
                 except IndexError:
-                    st.write("<h1 style='color:#1DB954; text-align:center;'>No Songs Found!</h1>", unsafe_allow_html=True) 
-                    st.write("<h1 style='color:#1DB954; text-align:center;'>Recheck ID</h1>", unsafe_allow_html=True)
+                    st.write("<h1 style='text-align:center;'>No Songs Found!</h1>", unsafe_allow_html=True) 
+                    st.write("<h1 style='text-align:center;'>Recheck ID</h1>", unsafe_allow_html=True)
                     
         if st.session_state.page_metadata == "artists":
             user_input = st.text_input("Insert Artist Name").lower()
@@ -132,8 +132,8 @@ def show_filter_page():
                     st.write(html_table, unsafe_allow_html=True)
                     
                 except IndexError:
-                    st.write("<h1 style='color:#1DB954; text-align:center;'>No Songs Found!</h1>", unsafe_allow_html=True) 
-                    st.write("<h1 style='color:#1DB954; text-align:center;'>Recheck Artist Name</h1>", unsafe_allow_html=True)
+                    st.write("<h1 style='text-align:center;'>No Songs Found!</h1>", unsafe_allow_html=True) 
+                    st.write("<h1 style='text-align:center;'>Recheck Artist Name</h1>", unsafe_allow_html=True)
                     
         if st.session_state.page_metadata == "album_name":
             user_input = st.text_input("Insert Album Name").lower()
@@ -168,8 +168,8 @@ def show_filter_page():
                     st.write(html_table, unsafe_allow_html=True)
                     
                 except IndexError:
-                    st.write("<h1 style='color:#1DB954; text-align:center;'>No Songs Found!</h1>", unsafe_allow_html=True) 
-                    st.write("<h1 style='color:#1DB954; text-align:center;'>Recheck Album Name</h1>", unsafe_allow_html=True)
+                    st.write("<h1 style='text-align:center;'>No Songs Found!</h1>", unsafe_allow_html=True) 
+                    st.write("<h1 style='text-align:center;'>Recheck Album Name</h1>", unsafe_allow_html=True)
                     
         if st.session_state.page_metadata == "track_name":
             user_input = st.text_input("Insert Track Name").lower()
@@ -204,8 +204,8 @@ def show_filter_page():
                     st.write(html_table, unsafe_allow_html=True)
                     
                 except IndexError:
-                    st.write("<h1 style='color:#1DB954; text-align:center;'>No Songs Found!</h1>", unsafe_allow_html=True) 
-                    st.write("<h1 style='color:#1DB954; text-align:center;'>Recheck Track Name</h1>", unsafe_allow_html=True)
+                    st.write("<h1 style='text-align:center;'>No Songs Found!</h1>", unsafe_allow_html=True) 
+                    st.write("<h1 style='text-align:center;'>Recheck Track Name</h1>", unsafe_allow_html=True)
                     
         if st.session_state.page_metadata == "track_genre":
             user_input = st.text_input("Insert Genre").lower()
@@ -240,12 +240,12 @@ def show_filter_page():
                     st.write(html_table, unsafe_allow_html=True)
                     
                 except IndexError:
-                    st.write("<h1 style='color:#1DB954; text-align:center;'>No Songs Found!</h1>", unsafe_allow_html=True) 
-                    st.write("<h1 style='color:#1DB954; text-align:center;'>Recheck Genre</h1>", unsafe_allow_html=True)
+                    st.write("<h1 style='text-align:center;'>No Songs Found!</h1>", unsafe_allow_html=True) 
+                    st.write("<h1 style='text-align:center;'>Recheck Genre</h1>", unsafe_allow_html=True)
     
     if st.session_state.page == "Audio Elements":
         st.session_state.page_metadata = "none"
-        st.markdown("<h1 style='color:#1DB954; text-align:center;'>Choose the Attribute to Query</h1>", unsafe_allow_html=True)
+        st.markdown("<h1 style='text-align:center;'>Choose the Attribute to Query</h1>", unsafe_allow_html=True)
         
         for i in range(3):
             st.text("")
@@ -325,8 +325,8 @@ def show_filter_page():
                     st.write(html_table, unsafe_allow_html=True)
                     
                 except IndexError:
-                    st.write("<h1 style='color:#1DB954; text-align:center;'>No Songs Found!</h1>", unsafe_allow_html=True) 
-                    st.write("<h1 style='color:#1DB954; text-align:center;'>Recheck Track ID</h1>", unsafe_allow_html=True)
+                    st.write("<h1 style='text-align:center;'>No Songs Found!</h1>", unsafe_allow_html=True) 
+                    st.write("<h1 style='text-align:center;'>Recheck Track ID</h1>", unsafe_allow_html=True)
     
     
         if st.session_state.page_elements == "popularity":
@@ -362,8 +362,8 @@ def show_filter_page():
                     st.write(html_table, unsafe_allow_html=True)
                     
                 except IndexError:
-                    st.write("<h1 style='color:#1DB954; text-align:center;'>No Songs Found!</h1>", unsafe_allow_html=True) 
-                    st.write("<h1 style='color:#1DB954; text-align:center;'>Recheck Popularity Score</h1>", unsafe_allow_html=True)       
+                    st.write("<h1 style='text-align:center;'>No Songs Found!</h1>", unsafe_allow_html=True) 
+                    st.write("<h1 style='text-align:center;'>Recheck Popularity Score</h1>", unsafe_allow_html=True)       
     
         if st.session_state.page_elements == "danceability":
             user_input = st.number_input("Insert Danceability Score", step = 0.01, value = None, help = "Insert a number between 0 and 1")
@@ -398,8 +398,8 @@ def show_filter_page():
                     st.write(html_table, unsafe_allow_html=True)
                     
                 except IndexError:
-                    st.write("<h1 style='color:#1DB954; text-align:center;'>No Songs Found!</h1>", unsafe_allow_html=True) 
-                    st.write("<h1 style='color:#1DB954; text-align:center;'>Recheck Danceability Score</h1>", unsafe_allow_html=True)         
+                    st.write("<h1 style='text-align:center;'>No Songs Found!</h1>", unsafe_allow_html=True) 
+                    st.write("<h1 style='text-align:center;'>Recheck Danceability Score</h1>", unsafe_allow_html=True)         
     
         if st.session_state.page_elements == "energy":
             user_input = st.number_input("Insert Energy Value", step = 0.01, value = None, help = "Insert a number between 0 and 1")
@@ -434,8 +434,8 @@ def show_filter_page():
                     st.write(html_table, unsafe_allow_html=True)
                     
                 except IndexError:
-                    st.write("<h1 style='color:#1DB954; text-align:center;'>No Songs Found!</h1>", unsafe_allow_html=True) 
-                    st.write("<h1 style='color:#1DB954; text-align:center;'>Recheck Energy Value</h1>", unsafe_allow_html=True) 
+                    st.write("<h1 style='text-align:center;'>No Songs Found!</h1>", unsafe_allow_html=True) 
+                    st.write("<h1 style='text-align:center;'>Recheck Energy Value</h1>", unsafe_allow_html=True) 
     
         if st.session_state.page_elements == "key":
             user_input = st.number_input("Insert Key", step = 1, value = None, help = "Insert a number between 0 and 11")
@@ -470,8 +470,8 @@ def show_filter_page():
                     st.write(html_table, unsafe_allow_html=True)
                     
                 except IndexError:
-                    st.write("<h1 style='color:#1DB954; text-align:center;'>No Songs Found!</h1>", unsafe_allow_html=True) 
-                    st.write("<h1 style='color:#1DB954; text-align:center;'>Recheck Key</h1>", unsafe_allow_html=True)       
+                    st.write("<h1 style='text-align:center;'>No Songs Found!</h1>", unsafe_allow_html=True) 
+                    st.write("<h1 style='text-align:center;'>Recheck Key</h1>", unsafe_allow_html=True)       
     
         if st.session_state.page_elements == "loudness":
             user_input = st.number_input("Insert Loudness", step = 0.1, format="%.1f", value = None, help = "Insert a number between -30 and 10")
@@ -506,8 +506,8 @@ def show_filter_page():
                     st.write(html_table, unsafe_allow_html=True)
                     
                 except IndexError:
-                    st.write("<h1 style='color:#1DB954; text-align:center;'>No Songs Found!</h1>", unsafe_allow_html=True) 
-                    st.write("<h1 style='color:#1DB954; text-align:center;'>Recheck Loudness</h1>", unsafe_allow_html=True)     
+                    st.write("<h1 style='text-align:center;'>No Songs Found!</h1>", unsafe_allow_html=True) 
+                    st.write("<h1 style='text-align:center;'>Recheck Loudness</h1>", unsafe_allow_html=True)     
     
         if st.session_state.page_elements == "mode":
             user_input = st.number_input("Insert Mode", step = 1, value = None, help = "Insert 0 or 1")
@@ -542,8 +542,8 @@ def show_filter_page():
                     st.write(html_table, unsafe_allow_html=True)
                     
                 except IndexError:
-                    st.write("<h1 style='color:#1DB954; text-align:center;'>No Songs Found!</h1>", unsafe_allow_html=True) 
-                    st.write("<h1 style='color:#1DB954; text-align:center;'>Recheck Mode</h1>", unsafe_allow_html=True)
+                    st.write("<h1 style='text-align:center;'>No Songs Found!</h1>", unsafe_allow_html=True) 
+                    st.write("<h1 style='text-align:center;'>Recheck Mode</h1>", unsafe_allow_html=True)
     
         if st.session_state.page_elements == "speechiness":
             user_input = st.number_input("Insert Speechiness Score", step = 0.01, format="%.2f", value = None, help = "Insert a number between 0 and 1")
@@ -578,8 +578,8 @@ def show_filter_page():
                     st.write(html_table, unsafe_allow_html=True)
                     
                 except IndexError:
-                    st.write("<h1 style='color:#1DB954; text-align:center;'>No Songs Found!</h1>", unsafe_allow_html=True) 
-                    st.write("<h1 style='color:#1DB954; text-align:center;'>Recheck Speechiness Value</h1>", unsafe_allow_html=True)
+                    st.write("<h1 style='text-align:center;'>No Songs Found!</h1>", unsafe_allow_html=True) 
+                    st.write("<h1 style='text-align:center;'>Recheck Speechiness Value</h1>", unsafe_allow_html=True)
     
         if st.session_state.page_elements == "acousticness":
             user_input = st.number_input("Insert Acousticness Value", step = 0.01, format="%.2f", value = None, help = "Insert a number between 0 and 1")
@@ -614,8 +614,8 @@ def show_filter_page():
                     st.write(html_table, unsafe_allow_html=True)
                     
                 except IndexError:
-                    st.write("<h1 style='color:#1DB954; text-align:center;'>No Songs Found!</h1>", unsafe_allow_html=True) 
-                    st.write("<h1 style='color:#1DB954; text-align:center;'>Recheck Acousticness Value</h1>", unsafe_allow_html=True)
+                    st.write("<h1 style='text-align:center;'>No Songs Found!</h1>", unsafe_allow_html=True) 
+                    st.write("<h1 style='text-align:center;'>Recheck Acousticness Value</h1>", unsafe_allow_html=True)
     
         if st.session_state.page_elements == "instrumentalness":
             user_input = st.number_input("Insert Instrumentalness Value", step = 0.00001, format="%.5f", value = None, help = "Acceptable values are small (ex: 0.00005)")
@@ -650,8 +650,8 @@ def show_filter_page():
                     st.write(html_table, unsafe_allow_html=True)
                     
                 except IndexError:
-                    st.write("<h1 style='color:#1DB954; text-align:center;'>No Songs Found!</h1>", unsafe_allow_html=True) 
-                    st.write("<h1 style='color:#1DB954; text-align:center;'>Recheck Instrumentalness Value</h1>", unsafe_allow_html=True)
+                    st.write("<h1 style='text-align:center;'>No Songs Found!</h1>", unsafe_allow_html=True) 
+                    st.write("<h1 style='text-align:center;'>Recheck Instrumentalness Value</h1>", unsafe_allow_html=True)
     
         if st.session_state.page_elements == "liveness":
             user_input = st.number_input("Insert Liveness Value", step = 0.01, format="%.2f", value = None, help = "Insert a number between 0 and 1")
@@ -686,8 +686,8 @@ def show_filter_page():
                     st.write(html_table, unsafe_allow_html=True)
                     
                 except IndexError:
-                    st.write("<h1 style='color:#1DB954; text-align:center;'>No Songs Found!</h1>", unsafe_allow_html=True) 
-                    st.write("<h1 style='color:#1DB954; text-align:center;'>Recheck Liveness Value</h1>", unsafe_allow_html=True)
+                    st.write("<h1 style='text-align:center;'>No Songs Found!</h1>", unsafe_allow_html=True) 
+                    st.write("<h1 style='text-align:center;'>Recheck Liveness Value</h1>", unsafe_allow_html=True)
     
         if st.session_state.page_elements == "valence":
             user_input = st.number_input("Insert Valence", step = 0.01, format="%.2f", value = None, help = "Insert a number between 0 and 1")
@@ -722,8 +722,8 @@ def show_filter_page():
                     st.write(html_table, unsafe_allow_html=True)
                     
                 except IndexError:
-                    st.write("<h1 style='color:#1DB954; text-align:center;'>No Songs Found!</h1>", unsafe_allow_html=True) 
-                    st.write("<h1 style='color:#1DB954; text-align:center;'>Recheck Valence</h1>", unsafe_allow_html=True)
+                    st.write("<h1 style='text-align:center;'>No Songs Found!</h1>", unsafe_allow_html=True) 
+                    st.write("<h1 style='text-align:center;'>Recheck Valence</h1>", unsafe_allow_html=True)
     
         if st.session_state.page_elements == "tempo":
             user_input = st.number_input("Insert Tempo", step = 1, value = None, help = "Insert an integer between 80 and 150")
@@ -758,8 +758,8 @@ def show_filter_page():
                     st.write(html_table, unsafe_allow_html=True)
                     
                 except IndexError:
-                    st.write("<h1 style='color:#1DB954; text-align:center;'>No Songs Found!</h1>", unsafe_allow_html=True) 
-                    st.write("<h1 style='color:#1DB954; text-align:center;'>Recheck Tempo</h1>", unsafe_allow_html=True)
+                    st.write("<h1 style='text-align:center;'>No Songs Found!</h1>", unsafe_allow_html=True) 
+                    st.write("<h1 style='text-align:center;'>Recheck Tempo</h1>", unsafe_allow_html=True)
     
         if st.session_state.page_elements == "time_signature":
             user_input = st.number_input("Insert Time Signature", step = 1, value = None, help = "Insert 3, 4, or 5")
@@ -794,8 +794,8 @@ def show_filter_page():
                     st.write(html_table, unsafe_allow_html=True)
                     
                 except IndexError:
-                    st.write("<h1 style='color:#1DB954; text-align:center;'>No Songs Found!</h1>", unsafe_allow_html=True) 
-                    st.write("<h1 style='color:#1DB954; text-align:center;'>Recheck Time Signature</h1>", unsafe_allow_html=True)
+                    st.write("<h1 style='text-align:center;'>No Songs Found!</h1>", unsafe_allow_html=True) 
+                    st.write("<h1 style='text-align:center;'>Recheck Time Signature</h1>", unsafe_allow_html=True)
     
     for i in range(5):
         st.text("")
@@ -830,7 +830,7 @@ def show_filter_page():
                     break
                     
             if not empty:
-                st.markdown("<h1 style='color:#1DB954; text-align:center;'>Insert Valid IDs</h1>", unsafe_allow_html=True)
+                st.markdown("<h1 style='text-align:center;'>Insert Valid IDs</h1>", unsafe_allow_html=True)
             else:  
                 for spotify_id in spotify_ids_lst:
                     spotify_id = spotify_id.strip()
