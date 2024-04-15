@@ -95,6 +95,69 @@ with st.sidebar:
                     if inserted:
                         st.success("Insertion successful!")
 
+# Modify button in the sidebar
+with st.sidebar:
+    modify_button_clicked = st.button("Modify")
+    if modify_button_clicked:
+        st.session_state.modify_button_clicked = True
+
+    if st.session_state.get("modify_button_clicked"):
+        st.markdown("## Modify Record")
+        selected_row_id = st.text_input("Enter Track ID of the row to modify", key="selected_row_id")
+
+        if selected_row_id:
+            st.text_input("Enter Track ID", value=selected_row_id, key="search_track_id", disabled=True)
+            
+            search_button_clicked = st.button("Search")
+            
+            if search_button_clicked:
+                if not selected_row_id:
+                    st.error("No Track ID entered.")
+                else:
+                    # Retrieve the rows containing the track_id from all databases
+                    selected_rows = []
+                    for db_name, client in mongo_clients.items():
+                        database = client[db_name]
+                        collection = database["song"]
+                        selected_row = collection.find_one({"track_id": selected_row_id})
+                        if selected_row:
+                            selected_rows.append((db_name, selected_row))
+
+                    if selected_rows:
+                        # Display the entry fields populated with selected row data
+                        st.markdown("## Modify Entry Fields")
+                        with st.form(key="modify_form"):
+                            entry = {}
+                            for field in ["track_id", "artists", "album_name", "track_name", "popularity",
+                                        "danceability", "energy", "key", "loudness", "mode", "speechiness",
+                                        "acousticness", "instrumentalness", "liveness", "valence", "tempo",
+                                        "time_signature", "track_genre"]:
+                                values = []
+                                for db_name, row_data in selected_rows:
+                                    value = row_data.get(field, "")  # Get the value from the selected row data
+                                    values.append(value)
+                                entry[field] = st.text_input(f"{field.capitalize()}", value=values[0], key=f"{field}_modify")
+
+                            submit_button_clicked = st.form_submit_button("Submit")
+
+                            if submit_button_clicked:
+                                # Validate the input
+                                errors = validate_input(entry)
+                                if errors:
+                                    st.error("\n".join(errors))
+                                else:
+                                    # Update the selected rows with the modifications
+                                    for db_name, row_data in selected_rows:
+                                        database = mongo_clients[db_name][db_name]
+                                        collection = database["song"]
+                                        collection.update_one({"track_id": selected_row_id}, {"$set": entry})
+                                    st.success("Modification successful!")
+
+
+
+
+
+
 # Display tables in a single column
 for db_name, client in mongo_clients.items():
     st.markdown(f"<h2 style='color: #1DB954;'>{db_name.capitalize()} Database</h2>", unsafe_allow_html=True)
