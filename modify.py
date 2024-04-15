@@ -54,7 +54,7 @@ with st.sidebar:
         st.markdown("## Insert New Record")
         with st.form(key="insert_form"):
             entry = {}
-            entry["track_id"] = st.text_input("Track ID")
+            entry["_id"] = st.text_input("Track ID")
             entry["artists"] = st.text_input("Artists")
             entry["album_name"] = st.text_input("Album Name")
             entry["track_name"] = st.text_input("Track Name")
@@ -86,8 +86,8 @@ with st.sidebar:
                     try:
                         # Insert into the corresponding database
                         database_key = f"song_metadata_{hash_fun(entry['track_id'])}"
-                        collection = mongo_clients[database_key]["song"]
-                        collection.insert_many([entry])  # Changed to insert_many
+                        collection = mongo_clients[database_key][database_key]["song"]
+                        collection.insert_one(entry)  # Changed to insert_many
                         inserted = True
                     except Exception as e:
                         st.error(f"Error occurred: {e}")
@@ -141,7 +141,7 @@ with st.sidebar:
                     
                     with st.form(key="modify_form"):
                         entry = {}
-                        entry["track_id"] = st.text_input("Track ID", value=selected_row_id, key="track_id_modify", disabled=True)
+                        entry["_id"] = st.text_input("Track ID", value=selected_row_id, key="track_id_modify", disabled=True)
                         entry["artists"] = st.text_input("Artists", value=selected_row.get("artists", ""), key="artists_modify")
                         entry["album_name"] = st.text_input("Album Name", value=selected_row.get("album_name", ""), key="album_name_modify")
                         entry["track_name"] = st.text_input("Track Name", value=selected_row.get("track_name", ""), key="track_name_modify")
@@ -163,14 +163,32 @@ with st.sidebar:
                         submit_button_clicked = st.form_submit_button("Submit")
 
                         if submit_button_clicked:
+                            st.markdown("Submit button clicked!")  # Print statement for debugging
                             # Validate the input
                             errors = validate_input(entry)
                             if errors:
+                                print("Errors:", errors)  # Debugging print statement
                                 st.error("\n".join(errors))
                             else:
-                                # Update the selected row with the modifications
-                                database.update_one({"track_id": selected_row_id}, {"$set": entry})
-                                st.success("Modification successful!")
+                                try:
+                                    st.markdown("Updating database with entry:", entry)  # Debugging print statement
+                                    
+                                    # Update the selected row with the modifications
+                                    database.update_one({"track_id": selected_row_id}, {"$set": entry})
+                                    
+                                    # Loop through the entry and update both collections
+                                    for key, value in entry.items():
+                                        # Update song_metadata collection
+                                        database.update_one({"track_id": selected_row_id}, {"$set": {key: value}})
+                                        
+                                        # Update audio_elements collection
+                                        audio_database.update_one({"_id": selected_row_id}, {"$set": {key: value}})
+                                        
+                                    st.success("Modification successful!")
+                                except Exception as e:
+                                    print("Error occurred during update:", e)  # Debugging print statement
+                                    st.error("An error occurred during modification. Please try again later.")
+
                 else:
                     st.error("Entered Track ID cannot be found in databases.")
 
