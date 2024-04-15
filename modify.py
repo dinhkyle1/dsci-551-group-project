@@ -116,36 +116,48 @@ with st.sidebar:
                 
                 # Connect to the corresponding database based on the hash value
                 if hash_value == 0:
-                    database = mongo_clients["song_metadata_0"]["song"]
+                    database = mongo_clients["song_metadata_0"]["song_metadata_0"]["song"]
+                    audio_database = mongo_clients["song_metadata_0"]["audio_elements_0"]["song"]
                 else:
-                    database = mongo_clients["song_metadata_1"]["song"]
+                    database = mongo_clients["song_metadata_1"]["song_metadata_1"]["song"]
+                    audio_database = mongo_clients["song_metadata_1"]["audio_elements_1"]["song"]
+                    
                 
                 # Search for the track_id in the selected database
                 selected_row = None
                 data = list(database.find({"_id": selected_row_id}))
                 if data:
                     selected_row = data[0]
+                    print("Selected Row (Before Appending Audio Elements):", selected_row)  # Print out the selected row dictionary for inspection
                 
                 if selected_row:
+                    # Append audio elements to the selected row
+                    audio_data = audio_database.find_one({"_id": selected_row_id})
+                    if audio_data:
+                        for key, value in audio_data.items():
+                            selected_row[key] = value
+                            
+                    print("Selected Row (After Appending Audio Elements):", selected_row)  # Print out the selected row dictionary for inspection
+                    
                     with st.form(key="modify_form"):
                         entry = {}
                         entry["track_id"] = st.text_input("Track ID", value=selected_row_id, key="track_id_modify", disabled=True)
                         entry["artists"] = st.text_input("Artists", value=selected_row.get("artists", ""), key="artists_modify")
                         entry["album_name"] = st.text_input("Album Name", value=selected_row.get("album_name", ""), key="album_name_modify")
                         entry["track_name"] = st.text_input("Track Name", value=selected_row.get("track_name", ""), key="track_name_modify")
-                        entry["popularity"] = st.number_input("Popularity", value=selected_row.get("popularity", 0), min_value=0, max_value=100, step=1, key="popularity_modify")
-                        entry["danceability"] = st.slider("Danceability", value=selected_row.get("danceability", 0.5), min_value=0.0, max_value=1.0, step=0.01, key="danceability_modify")
-                        entry["energy"] = st.slider("Energy", value=selected_row.get("energy", 0.5), min_value=0.0, max_value=1.0, step=0.01, key="energy_modify")
-                        entry["key"] = st.number_input("Key", value=selected_row.get("key", 0), min_value=0, key="key_modify")
-                        entry["loudness"] = st.slider("Loudness", value=selected_row.get("loudness", -30.0), min_value=-60.0, max_value=0.0, step=0.1, key="loudness_modify")
-                        entry["mode"] = st.selectbox("Mode", options=[0, 1], index=selected_row.get("mode", 0), key="mode_modify")
-                        entry["speechiness"] = st.slider("Speechiness", value=selected_row.get("speechiness", 0.5), min_value=0.0, max_value=1.0, step=0.01, key="speechiness_modify")
-                        entry["acousticness"] = st.slider("Acousticness", value=selected_row.get("acousticness", 0.5), min_value=0.0, max_value=1.0, step=0.01, key="acousticness_modify")
-                        entry["instrumentalness"] = st.slider("Instrumentalness", value=selected_row.get("instrumentalness", 0.5), min_value=0.0, max_value=1.0, step=0.01, key="instrumentalness_modify")
-                        entry["liveness"] = st.slider("Liveness", value=selected_row.get("liveness", 0.5), min_value=0.0, max_value=1.0, step=0.01, key="liveness_modify")
-                        entry["valence"] = st.slider("Valence", value=selected_row.get("valence", 0.5), min_value=0.0, max_value=1.0, step=0.01, key="valence_modify")
-                        entry["tempo"] = st.slider("Tempo", value=selected_row.get("tempo", 120.0), min_value=0.0, max_value=300.0, step=1.0, key="tempo_modify")
-                        entry["time_signature"] = st.number_input("Time Signature", value=selected_row.get("time_signature", 4), min_value=3, max_value=7, key="time_signature_modify")
+                        entry["popularity"] = st.number_input("Popularity", value=float(selected_row.get("popularity", 0)), min_value=0.0, max_value=100.0, step=1.0, key="popularity_modify")
+                        entry["danceability"] = st.slider("Danceability", value=float(selected_row.get("danceability", 0.5)), min_value=0.0, max_value=1.0, step=0.01, key="danceability_modify")
+                        entry["energy"] = st.slider("Energy", value=float(selected_row.get("energy", 0.5)), min_value=0.0, max_value=1.0, step=0.01, key="energy_modify")
+                        entry["key"] = st.number_input("Key", value=int(selected_row.get("key", 0)), min_value=0, key="key_modify")
+                        entry["loudness"] = st.slider("Loudness", value=float(selected_row.get("loudness", -30.0)), min_value=-60.0, max_value=0.0, step=0.1, key="loudness_modify")
+                        entry["mode"] = st.selectbox("Mode", options=[0, 1], index=int(selected_row.get("mode", 0)), key="mode_modify")
+                        entry["speechiness"] = st.slider("Speechiness", value=float(selected_row.get("speechiness", 0.5)), min_value=0.0, max_value=1.0, step=0.01, key="speechiness_modify")
+                        entry["acousticness"] = st.slider("Acousticness", value=float(selected_row.get("acousticness", 0.5)), min_value=0.0, max_value=1.0, step=0.01, key="acousticness_modify")
+                        entry["instrumentalness"] = st.slider("Instrumentalness", value=float(selected_row.get("instrumentalness", 0.5)), min_value=0.0, max_value=1.0, step=0.01, key="instrumentalness_modify")
+                        entry["liveness"] = st.slider("Liveness", value=float(selected_row.get("liveness", 0.5)), min_value=0.0, max_value=1.0, step=0.01, key="liveness_modify")
+                        entry["valence"] = st.slider("Valence", value=float(selected_row.get("valence", 0.5)), min_value=0.0, max_value=1.0, step=0.01, key="valence_modify")
+                        entry["tempo"] = st.slider("Tempo", value=float(selected_row.get("tempo", 120.0)), min_value=0.0, max_value=300.0, step=1.0, key="tempo_modify")
+                        entry["time_signature"] = st.number_input("Time Signature", value=int(selected_row.get("time_signature", 4)), min_value=3, max_value=7, key="time_signature_modify")
                         entry["track_genre"] = st.text_input("Track Genre", value=selected_row.get("track_genre", ""), key="track_genre_modify")
                         
                         submit_button_clicked = st.form_submit_button("Submit")
@@ -161,6 +173,8 @@ with st.sidebar:
                                 st.success("Modification successful!")
                 else:
                     st.error("Entered Track ID cannot be found in databases.")
+
+
 
 
 
