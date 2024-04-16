@@ -25,7 +25,7 @@ def show_crud_operations():
     # Function to validate input fields
     def validate_input(input_data):
         errors = []
-        if not input_data["track_id"]:
+        if not input_data["_id"]:
             errors.append("Track ID cannot be blank.")
         return errors
 
@@ -88,7 +88,7 @@ def show_crud_operations():
                         inserted = False
                         try:
                             # Insert into the corresponding database
-                            database_key = f"song_metadata_{hash_fun(entry['track_id'])}"
+                            database_key = f"song_metadata_{hash_fun(entry['_id'])}"
                             collection = mongo_clients[database_key][database_key]["song"]
                             collection.insert_one(entry)  # Changed to insert_many
                             inserted = True
