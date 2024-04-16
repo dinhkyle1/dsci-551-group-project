@@ -231,7 +231,7 @@ def show_crud_operations():
                                 # Print modified track IDs
                                 print("Modified Track IDs:", modified_track_ids)
                                 # Modify the rows in the database
-                                result = collection.update_many({attribute_to_modify: {"$gte": from_value, "$lte": to_value}}, {"$set": {attribute_to_modify: to_value}})
+                                result = collection.update_many({attribute_to_modify: from_value}, {"$set": {attribute_to_modify: to_value}})
                                 st.success(f"{result.modified_count} rows modified successfully in {database_keys[i]}!")
                                 
                                 # # Modify the rows in the sister database
