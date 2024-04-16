@@ -17,7 +17,7 @@ audio_elements_cols = ["track_id", "popularity", "danceability", "energy", "key"
                        "valence", "tempo", "time_signature"]
 
 ### use your own mongodb ip address!! ###
-mongodb_conn = 'mongodb://Dsci-551:Dsci-551@3.18.103.247:27017/'
+mongodb_conn = 'mongodb://Dsci-551:Dsci-551@18.218.162.125:27017/'
 
 hash_vals = []
 
