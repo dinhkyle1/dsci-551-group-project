@@ -192,9 +192,91 @@ with st.sidebar:
                 else:
                     st.error("Entered Track ID cannot be found in databases.")
 
+# Delete button in the sidebar
+with st.sidebar:
+    delete_button_clicked = st.button("Delete")
+    if delete_button_clicked:
+        st.session_state.delete_button_clicked = True
 
+    if st.session_state.get("delete_button_clicked"):
+        st.markdown("## Delete Record")
+        with st.form(key="delete_form"):
+            delete_single_row = st.checkbox("Delete Single Row")
+            delete_bulk_rows = st.checkbox("Delete Multiple Rows")
+            
+            if delete_single_row:
+                track_id_to_delete = st.text_input("Enter Track ID to delete", key="track_id_to_delete")
+                
+            if delete_bulk_rows:
+                attribute_to_delete = st.selectbox("Select attribute to delete rows by", ["artists", "album_name", "track_name", "popularity", "danceability", "energy", "key", "loudness", "mode", "speechiness", "acousticness", "instrumentalness", "liveness", "valence", "tempo", "time_signature", "track_genre"])
+                x = attribute_to_delete
+                value_to_delete = st.text_input(f"Enter value for {attribute_to_delete} to delete rows", key="value_to_delete")
 
+            if st.form_submit_button("Submit"):
+                if delete_single_row:
+                    # Validate the input
+                    if not track_id_to_delete:
+                        st.error("Track ID cannot be blank.")
+                    else:
+                        try:
+                            # Determine which database to delete from based on the track_id hash
+                            database_key = f"song_metadata_{hash_fun(track_id_to_delete)}"
+                            audio_key = f"audio_elements_{hash_fun(track_id_to_delete)}"
 
+                            collection = mongo_clients[database_key][database_key]["song"]
+                            audio_collection = mongo_clients[audio_key][audio_key]["song"]
+                            # Store track ID before deletion
+                            deleted_track_ids = [track_id_to_delete]
+                            # Delete the row
+                            result = collection.delete_one({"_id": track_id_to_delete})
+                            audio_result = audio_collection.delete_one({"_id": track_id_to_delete})
+                            if result.deleted_count == 1 and audio_result.deleted_count == 1:
+                                st.success("Row deleted successfully!")
+                            else:
+                                st.error("No matching row found to delete.")
+                        except Exception as e:
+                            st.error(f"An error occurred: {e}")
+                
+                if delete_bulk_rows:
+                    # Validate the input
+                    if not value_to_delete:
+                        st.error("Value cannot be blank.")
+                    else:
+                        try:
+                            # Determine which database to delete from based on the attribute hash
+                            if attribute_to_delete in ["artists", "album_name", "track_name", "track_genre"]:
+                                database_keys = [f"song_metadata_{i}" for i in range(2)]
+                                sister_database_keys = [f"audio_elements_{i}" for i in range(2)]
+
+                            if attribute_to_delete in ["popularity", "danceability", "energy", "key", "loudness", "mode", "speechiness", "acousticness", "instrumentalness", "liveness", "valence", "tempo", "time_signature"]:
+                                print("attribute_to_delete second if:", attribute_to_delete)
+                                value_to_delete = float(value_to_delete)
+                                print("value_to_delete second if:", value_to_delete)
+                                database_keys = [f"audio_elements_{i}" for i in range(2)]
+                                sister_database_keys = [f"song_metadata_{i}" for i in range(2)]
+
+                            for i in range(2):
+                                collection = mongo_clients[database_keys[i]][database_keys[i]]["song"]
+                                # Store track IDs before deletion
+                                deleted_track_ids = [doc['_id'] for doc in collection.find({attribute_to_delete: value_to_delete})]
+                                # Print deleted track IDs
+                                print("Deleted Track IDs:", deleted_track_ids)
+                                #delete rows from sister database
+                                sister_collection = mongo_clients[sister_database_keys[i]][sister_database_keys[i]]["song"]
+                                sister_result = sister_collection.delete_many({"_id": {"$in": deleted_track_ids}})
+                                st.success(f"{sister_result.deleted_count} rows deleted successfully from {sister_database_keys[i]}!")
+                                # Delete the rows from database
+                                result = collection.delete_many({attribute_to_delete: value_to_delete})
+                                st.success(f"{result.deleted_count} rows deleted successfully from {database_keys[i]}!")
+                                
+                            # for sister_database_key in sister_database_keys:
+                            #     sister_collection = mongo_clients[sister_database_key][sister_database_key]["song"]
+                            #     # Delete the rows
+                            #     sister_result = sister_collection.delete_many({"_id": {"$in": deleted_track_ids}})
+                            #     st.success(f"{sister_result.deleted_count} rows deleted successfully from {sister_database_key}!")
+                                
+                        except Exception as e:
+                            st.error(f"An error occurred: {e}")
 
 
 
