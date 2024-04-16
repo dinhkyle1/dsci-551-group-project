@@ -103,94 +103,138 @@ with st.sidebar:
 
     if st.session_state.get("modify_button_clicked"):
         st.markdown("## Modify Record")
-        selected_row_id = st.text_input("Enter Track ID of the row to modify", key="selected_row_id")
-        
-        search_button_clicked = st.button("Search")
+        with st.form(key="modify_form"):
+            modify_single_row = st.checkbox("Modify Single Row")
+            modify_bulk_rows = st.checkbox("Modify Multiple Rows")
+            
+            if modify_single_row:
+                selected_row_id = st.text_input("Enter Track ID of the row to modify", key="selected_row_id")
 
-        if search_button_clicked:
-            if not selected_row_id:
-                st.error("No Track ID entered.")
-            else:
-                # Hash the track_id to determine which database to search
-                hash_value = hash_fun(selected_row_id)
-                
-                # Connect to the corresponding database based on the hash value
-                if hash_value == 0:
-                    database = mongo_clients["song_metadata_0"]["song_metadata_0"]["song"]
-                    audio_database = mongo_clients["song_metadata_0"]["audio_elements_0"]["song"]
+            if modify_bulk_rows:
+                attribute_to_modify = st.selectbox("Select attribute to modify rows by", ["artists", "album_name", "track_name", "popularity", "danceability", "energy", "key", "loudness", "mode", "speechiness", "acousticness", "instrumentalness", "liveness", "valence", "tempo", "time_signature", "track_genre"])
+                from_value = st.text_input(f"Enter 'from' value for {attribute_to_modify}", key="from_value")
+                to_value = st.text_input(f"Enter 'to' value for {attribute_to_modify}", key="to_value")
+
+            submit_button_clicked = st.form_submit_button("Submit")
+
+        if submit_button_clicked:
+            if modify_single_row:
+                if not selected_row_id:
+                    st.error("No Track ID entered.")
                 else:
-                    database = mongo_clients["song_metadata_1"]["song_metadata_1"]["song"]
-                    audio_database = mongo_clients["song_metadata_1"]["audio_elements_1"]["song"]
+                    # Hash the track_id to determine which database to search
+                    hash_value = hash_fun(selected_row_id)
                     
-                
-                # Search for the track_id in the selected database
-                selected_row = None
-                data = list(database.find({"_id": selected_row_id}))
-                if data:
-                    selected_row = data[0]
-                    print("Selected Row (Before Appending Audio Elements):", selected_row)  # Print out the selected row dictionary for inspection
-                
-                if selected_row:
-                    # Append audio elements to the selected row
-                    audio_data = audio_database.find_one({"_id": selected_row_id})
-                    if audio_data:
-                        for key, value in audio_data.items():
-                            selected_row[key] = value
-                            
-                    print("Selected Row (After Appending Audio Elements):", selected_row)  # Print out the selected row dictionary for inspection
-                    
-                    with st.form(key="modify_form"):
-                        entry = {}
-                        entry["_id"] = st.text_input("Track ID", value=selected_row_id, key="track_id_modify", disabled=True)
-                        entry["artists"] = st.text_input("Artists", value=selected_row.get("artists", ""), key="artists_modify")
-                        entry["album_name"] = st.text_input("Album Name", value=selected_row.get("album_name", ""), key="album_name_modify")
-                        entry["track_name"] = st.text_input("Track Name", value=selected_row.get("track_name", ""), key="track_name_modify")
-                        entry["popularity"] = st.number_input("Popularity", value=float(selected_row.get("popularity", 0)), min_value=0.0, max_value=100.0, step=1.0, key="popularity_modify")
-                        entry["danceability"] = st.slider("Danceability", value=float(selected_row.get("danceability", 0.5)), min_value=0.0, max_value=1.0, step=0.01, key="danceability_modify")
-                        entry["energy"] = st.slider("Energy", value=float(selected_row.get("energy", 0.5)), min_value=0.0, max_value=1.0, step=0.01, key="energy_modify")
-                        entry["key"] = st.number_input("Key", value=int(selected_row.get("key", 0)), min_value=0, key="key_modify")
-                        entry["loudness"] = st.slider("Loudness", value=float(selected_row.get("loudness", -30.0)), min_value=-60.0, max_value=0.0, step=0.1, key="loudness_modify")
-                        entry["mode"] = st.selectbox("Mode", options=[0, 1], index=int(selected_row.get("mode", 0)), key="mode_modify")
-                        entry["speechiness"] = st.slider("Speechiness", value=float(selected_row.get("speechiness", 0.5)), min_value=0.0, max_value=1.0, step=0.01, key="speechiness_modify")
-                        entry["acousticness"] = st.slider("Acousticness", value=float(selected_row.get("acousticness", 0.5)), min_value=0.0, max_value=1.0, step=0.01, key="acousticness_modify")
-                        entry["instrumentalness"] = st.slider("Instrumentalness", value=float(selected_row.get("instrumentalness", 0.5)), min_value=0.0, max_value=1.0, step=0.01, key="instrumentalness_modify")
-                        entry["liveness"] = st.slider("Liveness", value=float(selected_row.get("liveness", 0.5)), min_value=0.0, max_value=1.0, step=0.01, key="liveness_modify")
-                        entry["valence"] = st.slider("Valence", value=float(selected_row.get("valence", 0.5)), min_value=0.0, max_value=1.0, step=0.01, key="valence_modify")
-                        entry["tempo"] = st.slider("Tempo", value=float(selected_row.get("tempo", 120.0)), min_value=0.0, max_value=300.0, step=1.0, key="tempo_modify")
-                        entry["time_signature"] = st.number_input("Time Signature", value=int(selected_row.get("time_signature", 4)), min_value=3, max_value=7, key="time_signature_modify")
-                        entry["track_genre"] = st.text_input("Track Genre", value=selected_row.get("track_genre", ""), key="track_genre_modify")
+                    # Connect to the corresponding database based on the hash value
+                    if hash_value == 0:
+                        database = mongo_clients["song_metadata_0"]["song_metadata_0"]["song"]
+                        audio_database = mongo_clients["song_metadata_0"]["audio_elements_0"]["song"]
+                    else:
+                        database = mongo_clients["song_metadata_1"]["song_metadata_1"]["song"]
+                        audio_database = mongo_clients["song_metadata_1"]["audio_elements_1"]["song"]
                         
-                        submit_button_clicked = st.form_submit_button("Submit")
+                    
+                    # Search for the track_id in the selected database
+                    selected_row = None
+                    data = list(database.find({"_id": selected_row_id}))
+                    if data:
+                        selected_row = data[0]
+                        print("Selected Row (Before Appending Audio Elements):", selected_row)  # Print out the selected row dictionary for inspection
+                    
+                    if selected_row:
+                        # Append audio elements to the selected row
+                        audio_data = audio_database.find_one({"_id": selected_row_id})
+                        if audio_data:
+                            for key, value in audio_data.items():
+                                selected_row[key] = value
+                                
+                        print("Selected Row (After Appending Audio Elements):", selected_row)  # Print out the selected row dictionary for inspection
+                        
+                        with st.form(key="modify_form_single"):
+                            entry = {}
+                            entry["_id"] = st.text_input("Track ID", value=selected_row_id, key="track_id_modify_single", disabled=True)
+                            entry["artists"] = st.text_input("Artists", value=selected_row.get("artists", ""), key="artists_modify_single")
+                            entry["album_name"] = st.text_input("Album Name", value=selected_row.get("album_name", ""), key="album_name_modify_single")
+                            entry["track_name"] = st.text_input("Track Name", value=selected_row.get("track_name", ""), key="track_name_modify_single")
+                            entry["popularity"] = st.number_input("Popularity", value=float(selected_row.get("popularity", 0)), min_value=0.0, max_value=100.0, step=1.0, key="popularity_modify_single")
+                            entry["danceability"] = st.slider("Danceability", value=float(selected_row.get("danceability", 0.5)), min_value=0.0, max_value=1.0, step=0.01, key="danceability_modify_single")
+                            entry["energy"] = st.slider("Energy", value=float(selected_row.get("energy", 0.5)), min_value=0.0, max_value=1.0, step=0.01, key="energy_modify_single")
+                            entry["key"] = st.number_input("Key", value=int(selected_row.get("key", 0)), min_value=0, key="key_modify_single")
+                            entry["loudness"] = st.slider("Loudness", value=float(selected_row.get("loudness", -30.0)), min_value=-60.0, max_value=0.0, step=0.1, key="loudness_modify_single")
+                            entry["mode"] = st.selectbox("Mode", options=[0, 1], index=int(selected_row.get("mode", 0)), key="mode_modify_single")
+                            entry["speechiness"] = st.slider("Speechiness", value=float(selected_row.get("speechiness", 0.5)), min_value=0.0, max_value=1.0, step=0.01, key="speechiness_modify_single")
+                            entry["acousticness"] = st.slider("Acousticness", value=float(selected_row.get("acousticness", 0.5)), min_value=0.0, max_value=1.0, step=0.01, key="acousticness_modify_single")
+                            entry["instrumentalness"] = st.slider("Instrumentalness", value=float(selected_row.get("instrumentalness", 0.5)), min_value=0.0, max_value=1.0, step=0.01, key="instrumentalness_modify_single")
+                            entry["liveness"] = st.slider("Liveness", value=float(selected_row.get("liveness", 0.5)), min_value=0.0, max_value=1.0, step=0.01, key="liveness_modify_single")
+                            entry["valence"] = st.slider("Valence", value=float(selected_row.get("valence", 0.5)), min_value=0.0, max_value=1.0, step=0.01, key="valence_modify_single")
+                            entry["tempo"] = st.slider("Tempo", value=float(selected_row.get("tempo", 120.0)), min_value=0.0, max_value=300.0, step=1.0, key="tempo_modify_single")
+                            entry["time_signature"] = st.number_input("Time Signature", value=int(selected_row.get("time_signature", 4)), min_value=3, max_value=7, key="time_signature_modify_single")
+                            entry["track_genre"] = st.text_input("Track Genre", value=selected_row.get("track_genre", ""), key="track_genre_modify_single")
+                            
+                            submit_button_clicked = st.form_submit_button("Submit")
 
-                        if submit_button_clicked:
-                            st.markdown("Submit button clicked!")  # Print statement for debugging
-                            # Validate the input
-                            errors = validate_input(entry)
-                            if errors:
-                                print("Errors:", errors)  # Debugging print statement
-                                st.error("\n".join(errors))
-                            else:
-                                try:
-                                    st.markdown("Updating database with entry:", entry)  # Debugging print statement
-                                    
-                                    # Update the selected row with the modifications
-                                    database.update_one({"track_id": selected_row_id}, {"$set": entry})
-                                    
-                                    # Loop through the entry and update both collections
-                                    for key, value in entry.items():
-                                        # Update song_metadata collection
-                                        database.update_one({"track_id": selected_row_id}, {"$set": {key: value}})
+                            if submit_button_clicked:
+                                st.markdown("Submit button clicked!")  # Print statement for debugging
+                                # Validate the input
+                                errors = validate_input(entry)
+                                if errors:
+                                    print("Errors:", errors)  # Debugging print statement
+                                    st.error("\n".join(errors))
+                                else:
+                                    try:
+                                        st.markdown("Updating database with entry:", entry)  # Debugging print statement
                                         
-                                        # Update audio_elements collection
-                                        audio_database.update_one({"_id": selected_row_id}, {"$set": {key: value}})
+                                        # Update the selected row with the modifications
+                                        database.update_one({"_id": selected_row_id}, {"$set": entry})
                                         
-                                    st.success("Modification successful!")
-                                except Exception as e:
-                                    print("Error occurred during update:", e)  # Debugging print statement
-                                    st.error("An error occurred during modification. Please try again later.")
+                                        # Loop through the entry and update both collections
+                                        for key, value in entry.items():
+                                            # Update song_metadata collection
+                                            database.update_one({"_id": selected_row_id}, {"$set": {key: value}})
+                                            
+                                            # Update audio_elements collection
+                                            audio_database.update_one({"_id": selected_row_id}, {"$set": {key: value}})
+                                            
+                                        st.success("Modification successful!")
+                                    except Exception as e:
+                                        print("Error occurred during update:", e)  # Debugging print statement
+                                        st.error("An error occurred during modification. Please try again later.")
 
+            elif modify_bulk_rows:
+                if not from_value or not to_value:
+                    st.error("Both 'from' and 'to' values are required.")
                 else:
-                    st.error("Entered Track ID cannot be found in databases.")
+                    try:
+                        from_value = float(from_value)
+                        to_value = float(to_value)
+                        # Determine which database to search based on the attribute hash
+                        if attribute_to_modify in ["artists", "album_name", "track_name", "track_genre"]:
+                            database_keys = [f"song_metadata_{i}" for i in range(2)]
+                            sister_database_keys = [f"audio_elements_{i}" for i in range(2)]
+
+                        if attribute_to_modify in ["popularity", "danceability", "energy", "key", "loudness", "mode", "speechiness", "acousticness", "instrumentalness", "liveness", "valence", "tempo", "time_signature"]:
+                            database_keys = [f"audio_elements_{i}" for i in range(2)]
+                            sister_database_keys = [f"song_metadata_{i}" for i in range(2)]
+
+                        for i in range(2):
+                            collection = mongo_clients[database_keys[i]][database_keys[i]]["song"]
+                            # Store track IDs before modification
+                            modified_track_ids = [doc['_id'] for doc in collection.find({attribute_to_modify: {"$gte": from_value, "$lte": to_value}})]
+                            # Print modified track IDs
+                            print("Modified Track IDs:", modified_track_ids)
+                            # Modify the rows in the database
+                            result = collection.update_many({attribute_to_modify: {"$gte": from_value, "$lte": to_value}}, {"$set": {attribute_to_modify: "modified"}})
+                            st.success(f"{result.modified_count} rows modified successfully in {database_keys[i]}!")
+                            
+                            # Modify the rows in the sister database
+                            sister_collection = mongo_clients[sister_database_keys[i]][sister_database_keys[i]]["song"]
+                            sister_result = sister_collection.update_many({"_id": {"$in": modified_track_ids}}, {"$set": {attribute_to_modify: "modified"}})
+                            st.success(f"{sister_result.modified_count} rows modified successfully in {sister_database_keys[i]}!")
+                        
+                    except Exception as e:
+                        st.error(f"An error occurred: {e}")
+
+
 
 # Delete button in the sidebar
 with st.sidebar:
