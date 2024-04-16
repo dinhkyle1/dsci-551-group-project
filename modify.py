@@ -205,16 +205,18 @@ with st.sidebar:
                     st.error("Both 'from' and 'to' values are required.")
                 else:
                     try:
-                        from_value = float(from_value)
-                        to_value = float(to_value)
+                        # from_value = float(from_value)
+                        # to_value = float(to_value)
                         # Determine which database to search based on the attribute hash
                         if attribute_to_modify in ["artists", "album_name", "track_name", "track_genre"]:
                             database_keys = [f"song_metadata_{i}" for i in range(2)]
-                            sister_database_keys = [f"audio_elements_{i}" for i in range(2)]
+                            # sister_database_keys = [f"audio_elements_{i}" for i in range(2)]
 
                         if attribute_to_modify in ["popularity", "danceability", "energy", "key", "loudness", "mode", "speechiness", "acousticness", "instrumentalness", "liveness", "valence", "tempo", "time_signature"]:
+                            from_value = float(from_value)
+                            to_value = float(to_value)
                             database_keys = [f"audio_elements_{i}" for i in range(2)]
-                            sister_database_keys = [f"song_metadata_{i}" for i in range(2)]
+                            # sister_database_keys = [f"song_metadata_{i}" for i in range(2)]
 
                         for i in range(2):
                             collection = mongo_clients[database_keys[i]][database_keys[i]]["song"]
@@ -223,16 +225,17 @@ with st.sidebar:
                             # Print modified track IDs
                             print("Modified Track IDs:", modified_track_ids)
                             # Modify the rows in the database
-                            result = collection.update_many({attribute_to_modify: {"$gte": from_value, "$lte": to_value}}, {"$set": {attribute_to_modify: "modified"}})
+                            result = collection.update_many({attribute_to_modify: {"$gte": from_value, "$lte": to_value}}, {"$set": {attribute_to_modify: to_value}})
                             st.success(f"{result.modified_count} rows modified successfully in {database_keys[i]}!")
                             
-                            # Modify the rows in the sister database
-                            sister_collection = mongo_clients[sister_database_keys[i]][sister_database_keys[i]]["song"]
-                            sister_result = sister_collection.update_many({"_id": {"$in": modified_track_ids}}, {"$set": {attribute_to_modify: "modified"}})
-                            st.success(f"{sister_result.modified_count} rows modified successfully in {sister_database_keys[i]}!")
+                            # # Modify the rows in the sister database
+                            # sister_collection = mongo_clients[sister_database_keys[i]][sister_database_keys[i]]["song"]
+                            # sister_result = sister_collection.update_many({"_id": {"$in": modified_track_ids}}, {"$set": {attribute_to_modify: to_value}})
+                            # st.success(f"{sister_result.modified_count} rows modified successfully in {sister_database_keys[i]}!")
                         
                     except Exception as e:
                         st.error(f"An error occurred: {e}")
+
 
 
 
