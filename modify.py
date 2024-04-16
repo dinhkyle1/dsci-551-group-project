@@ -147,7 +147,7 @@ with st.sidebar:
                         if audio_data:
                             for key, value in audio_data.items():
                                 selected_row[key] = value
-                                
+                            
                         print("Selected Row (After Appending Audio Elements):", selected_row)  # Print out the selected row dictionary for inspection
                         
                         with st.form(key="modify_form_single"):
@@ -171,11 +171,12 @@ with st.sidebar:
                             entry["time_signature"] = st.number_input("Time Signature", value=int(selected_row.get("time_signature", 4)), min_value=3, max_value=7, key="time_signature_modify_single")
                             entry["track_genre"] = st.text_input("Track Genre", value=selected_row.get("track_genre", ""), key="track_genre_modify_single")
                             
-                            submit_button_clicked = st.form_submit_button("Submit")
+                            submit_modifications_clicked = st.form_submit_button("Submit Modifications")
 
-                            if submit_button_clicked:
+                            if submit_modifications_clicked:
                                 st.markdown("Submit button clicked!")  # Print statement for debugging
                                 # Validate the input
+                                print("entry: ", entry)
                                 errors = validate_input(entry)
                                 if errors:
                                     print("Errors:", errors)  # Debugging print statement
@@ -200,6 +201,8 @@ with st.sidebar:
                                         print("Error occurred during update:", e)  # Debugging print statement
                                         st.error("An error occurred during modification. Please try again later.")
 
+                            else:
+                                st.error("I'm stuck here.")
             elif modify_bulk_rows:
                 if not from_value or not to_value:
                     st.error("Both 'from' and 'to' values are required.")
