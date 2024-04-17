@@ -1,7 +1,22 @@
 import streamlit as st
+from PIL import Image
 
 def main_header():
     """ Renders the main header for the application. """
+    image_path = "spotify_logo.png"
+    image = Image.open(image_path)
+    col1, col2, col3, col4, col5, col6, col7 = st.columns(7)
+    with col1:
+        pass
+    with col3:
+        pass
+    with col7:
+        st.image(image, width=80)
+    with col2:
+        pass
+    with col4:
+        pass
+
     st.markdown("""
         <h1 style='text-align: center; color: var(--primary-color);'>Spotify Tracks Management System</h1>
         <hr style='height: 2px; background-color: var(--primary-color);'>

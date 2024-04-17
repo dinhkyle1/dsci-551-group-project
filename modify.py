@@ -141,7 +141,7 @@ def show_crud_operations():
                 submit_button_clicked = st.button("Submit", key="Modify_submit")
 
             if modify == "Modify Multiple Rows":
-                attribute_to_modify = st.selectbox("Select attribute to modify rows by", ["artists", "album_name", "track_name", "popularity", "danceability", "energy", "key", "loudness", "mode", "speechiness", "acousticness", "instrumentalness", "liveness", "valence", "tempo", "time_signature", "track_genre"])
+                attribute_to_modify = st.selectbox("Select attribute to modify rows by", ["artists", "album_name", "track_name", "track_genre", "popularity", "danceability", "energy", "key", "loudness", "mode", "speechiness", "acousticness", "instrumentalness", "liveness", "valence", "tempo", "time_signature"])
                 from_value = st.text_input(f"Enter 'from' value for {attribute_to_modify}", key="from_value")
                 to_value = st.text_input(f"Enter 'to' value for {attribute_to_modify}", key="to_value")
                 submit_button_clicked = st.button("Submit", key="Modify_submit")
@@ -329,7 +329,7 @@ def show_crud_operations():
 
                 
             if modify == "Delete Multiple Rows":
-                attribute_to_delete = st.selectbox("Select attribute to delete rows by", ["artists", "album_name", "track_name", "popularity", "danceability", "energy", "key", "loudness", "mode", "speechiness", "acousticness", "instrumentalness", "liveness", "valence", "tempo", "time_signature", "track_genre"])
+                attribute_to_delete = st.selectbox("Select attribute to delete rows by", ["artists", "album_name", "track_name", "track_genre", "popularity", "danceability", "energy", "key", "loudness", "mode", "speechiness", "acousticness", "instrumentalness", "liveness", "valence", "tempo", "time_signature"])
                 x = attribute_to_delete
                 value_to_delete = st.text_input(f"Enter value for {attribute_to_delete} to delete rows", key="value_to_delete")
                 delete_button = st.button("Submit", key="Delete_submit")
@@ -352,8 +352,8 @@ def show_crud_operations():
                             result = collection.delete_one({"_id": track_id_to_delete})
                             audio_result = audio_collection.delete_one({"_id": track_id_to_delete})
                             if result.deleted_count == 1 and audio_result.deleted_count == 1:
-                                st.success(f"Deleted successfully into {database_key}!")
-                                st.success(f"Deleted successfully into {audio_key}!")
+                                st.success(f"Deleted successfully from {database_key}!")
+                                st.success(f"Deleted successfully from {audio_key}!")
                             else:
                                 st.error("No matching row found to delete.")
                         except Exception as e:
