@@ -70,33 +70,12 @@ def show_crud_operations():
     # Connect to the MongoDB databases
     mongo_clients = {db: MongoClient(database_urls[db]) for db in database_urls}
 
-    # # Streamlit UI
-    # st.set_page_config(page_title="Spotify Tracks Distributed Database", layout="wide")
-
     # Function to validate input fields
     def validate_input(input_data):
         errors = []
         if not input_data["_id"]:
             errors.append("Track ID cannot be blank.")
         return errors
-
-    # # Light to dark theme toggle
-    # theme = st.sidebar.checkbox("Dark Mode", False, key="theme", help="Toggle dark mode")
-
-    # # Apply dark mode theme if selected
-    # if theme:
-    #     st.markdown(
-    #         """
-    #         <style>
-    #         /* Dark mode CSS */
-    #         body, .stApp {
-    #             color: #f8f9fa;
-    #             background-color: #343a40;
-    #         }
-    #         </style>
-    #         """,
-    #         unsafe_allow_html=True,
-    #     )
 
     # Insert button and entry fields in the sidebar
     with st.sidebar:
@@ -186,7 +165,7 @@ def show_crud_operations():
                 submit_button_clicked = st.button("Submit", key="Modify_submit")
 
             if modify == "Modify Multiple Rows":
-                attribute_to_modify = st.selectbox("Select attribute to modify rows by", ["artists", "album_name", "track_name", "popularity", "danceability", "energy", "key", "loudness", "mode", "speechiness", "acousticness", "instrumentalness", "liveness", "valence", "tempo", "time_signature", "track_genre"])
+                attribute_to_modify = st.selectbox("Select attribute to modify rows by", ["artists", "album_name", "track_name", "track_genre", "popularity", "danceability", "energy", "key", "loudness", "mode", "speechiness", "acousticness", "instrumentalness", "liveness", "valence", "tempo", "time_signature"])
                 from_value = st.text_input(f"Enter 'from' value for {attribute_to_modify}", key="from_value")
                 to_value = st.text_input(f"Enter 'to' value for {attribute_to_modify}", key="to_value")
                 submit_button_clicked = st.button("Submit", key="Modify_submit")
@@ -331,18 +310,8 @@ def show_crud_operations():
 
                             for i in range(2):
                                 collection = mongo_clients[database_keys[i]][database_keys[i]]["song"]
-                                # Store track IDs before modification
-                                # modified_track_ids = [doc['_id'] for doc in collection.find({attribute_to_modify: {"$gte": from_value, "$lte": to_value}})]
-                                # Print modified track IDs
-                                # print("Modified Track IDs:", modified_track_ids)
-                                # Modify the rows in the database
                                 result = collection.update_many({attribute_to_modify: from_value}, {"$set": {attribute_to_modify: to_value}})
                                 st.success(f"{result.modified_count} rows modified successfully in {database_keys[i]}!")
-                                
-                                # # Modify the rows in the sister database
-                                # sister_collection = mongo_clients[sister_database_keys[i]][sister_database_keys[i]]["song"]
-                                # sister_result = sister_collection.update_many({"_id": {"$in": modified_track_ids}}, {"$set": {attribute_to_modify: to_value}})
-                                # st.success(f"{sister_result.modified_count} rows modified successfully in {sister_database_keys[i]}!")
                             
                         except Exception as e:
                             st.error(f"An error occurred: {e}")
@@ -374,7 +343,7 @@ def show_crud_operations():
 
                 
             if modify == "Delete Multiple Rows":
-                attribute_to_delete = st.selectbox("Select attribute to delete rows by", ["artists", "album_name", "track_name", "popularity", "danceability", "energy", "key", "loudness", "mode", "speechiness", "acousticness", "instrumentalness", "liveness", "valence", "tempo", "time_signature", "track_genre"])
+                attribute_to_delete = st.selectbox("Select attribute to delete rows by", ["artists", "album_name", "track_name", "track_genre", "popularity", "danceability", "energy", "key", "loudness", "mode", "speechiness", "acousticness", "instrumentalness", "liveness", "valence", "tempo", "time_signature"])
                 x = attribute_to_delete
                 value_to_delete = st.text_input(f"Enter value for {attribute_to_delete} to delete rows", key="value_to_delete")
                 delete_button = st.button("Submit", key="Delete_submit")
@@ -397,8 +366,8 @@ def show_crud_operations():
                             result = collection.delete_one({"_id": track_id_to_delete})
                             audio_result = audio_collection.delete_one({"_id": track_id_to_delete})
                             if result.deleted_count == 1 and audio_result.deleted_count == 1:
-                                st.success(f"Deleted successfully into {database_key}!")
-                                st.success(f"Deleted successfully into {audio_key}!")
+                                st.success(f"Deleted successfully from {database_key}!")
+                                st.success(f"Deleted successfully from {audio_key}!")
                             else:
                                 st.error("No matching row found to delete.")
                         except Exception as e:
@@ -435,12 +404,6 @@ def show_crud_operations():
                                 # Delete the rows from database
                                 result = collection.delete_many({attribute_to_delete: value_to_delete})
                                 st.success(f"{result.deleted_count} rows deleted successfully from {database_keys[i]}!")
-                                
-                            # for sister_database_key in sister_database_keys:
-                            #     sister_collection = mongo_clients[sister_database_key][sister_database_key]["song"]
-                            #     # Delete the rows
-                            #     sister_result = sister_collection.delete_many({"_id": {"$in": deleted_track_ids}})
-                            #     st.success(f"{sister_result.deleted_count} rows deleted successfully from {sister_database_key}!")
                                 
                         except Exception as e:
                             st.error(f"An error occurred: {e}")
