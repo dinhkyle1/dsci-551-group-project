@@ -107,8 +107,12 @@ def show_filter_page():
     
         if st.session_state.page_metadata == "track_id":
             user_input = st.text_input("Insert ID", help = "Track ID is case-sensitive")
+            
+            col1, col2, col3, col4, col5, col6, col7, col8 = st.columns(8)
+            with col8:
+                submit_button = st.button("Submit")
     
-            if user_input:
+            if submit_button:
                 hash = hash_fun(user_input)
                 if hash == 0:
                     database = mongo_client["song_metadata_0"]
@@ -139,8 +143,12 @@ def show_filter_page():
                     
         if st.session_state.page_metadata == "artists":
             user_input = st.text_input("Insert Artist Name").lower()
+            
+            col1, col2, col3, col4, col5, col6, col7, col8 = st.columns(8)
+            with col8:
+                submit_button = st.button("Submit")
     
-            if user_input:
+            if submit_button:
                 database = mongo_client["song_metadata_0"]
                 collection = database["song"]
         
@@ -175,8 +183,12 @@ def show_filter_page():
                     
         if st.session_state.page_metadata == "album_name":
             user_input = st.text_input("Insert Album Name").lower()
+            
+            col1, col2, col3, col4, col5, col6, col7, col8 = st.columns(8)
+            with col8:
+                submit_button = st.button("Submit")
     
-            if user_input:
+            if submit_button:
                 database = mongo_client["song_metadata_0"]
                 collection = database["song"]
         
@@ -212,7 +224,11 @@ def show_filter_page():
         if st.session_state.page_metadata == "track_name":
             user_input = st.text_input("Insert Track Name").lower()
     
-            if user_input:
+            col1, col2, col3, col4, col5, col6, col7, col8 = st.columns(8)
+            with col8:
+                submit_button = st.button("Submit")
+    
+            if submit_button:
                 database = mongo_client["song_metadata_0"]
                 collection = database["song"]
         
@@ -248,7 +264,11 @@ def show_filter_page():
         if st.session_state.page_metadata == "track_genre":
             user_input = st.text_input("Insert Genre").lower()
     
-            if user_input:
+            col1, col2, col3, col4, col5, col6, col7, col8 = st.columns(8)
+            with col8:
+                submit_button = st.button("Submit")
+    
+            if submit_button:
                 database = mongo_client["song_metadata_0"]
                 collection = database["song"]
         
@@ -337,7 +357,11 @@ def show_filter_page():
         if st.session_state.page_elements == "track_id":
             user_input = st.text_input("Insert ID", help = "Track ID is case-sensitive")
     
-            if user_input:
+            col1, col2, col3, col4, col5, col6, col7, col8 = st.columns(8)
+            with col8:
+                submit_button = st.button("Submit")
+    
+            if submit_button:
                 hash = hash_fun(user_input)
                 if hash == 0:
                     database = mongo_client["audio_elements_0"]
@@ -370,7 +394,11 @@ def show_filter_page():
         if st.session_state.page_elements == "popularity":
             user_input = st.number_input("Insert Popularity Score", step = 1, value = None, help = "Insert a value between 0 and 100")
     
-            if user_input is not None:
+            col1, col2, col3, col4, col5, col6, col7, col8 = st.columns(8)
+            with col8:
+                submit_button = st.button("Submit")
+    
+            if submit_button:
                 database = mongo_client["audio_elements_0"]
                 collection = database["song"]
         
@@ -406,7 +434,11 @@ def show_filter_page():
         if st.session_state.page_elements == "danceability":
             user_input = st.number_input("Insert Danceability Score", step = 0.01, value = None, help = "Insert a number between 0 and 1")
     
-            if user_input is not None:
+            col1, col2, col3, col4, col5, col6, col7, col8 = st.columns(8)
+            with col8:
+                submit_button = st.button("Submit")
+    
+            if submit_button:
                 database = mongo_client["audio_elements_0"]
                 collection = database["song"]
         
@@ -442,7 +474,11 @@ def show_filter_page():
         if st.session_state.page_elements == "energy":
             user_input = st.number_input("Insert Energy Value", step = 0.01, value = None, help = "Insert a number between 0 and 1")
     
-            if user_input is not None:
+            col1, col2, col3, col4, col5, col6, col7, col8 = st.columns(8)
+            with col8:
+                submit_button = st.button("Submit")
+    
+            if submit_button:
                 database = mongo_client["audio_elements_0"]
                 collection = database["song"]
         
@@ -478,7 +514,11 @@ def show_filter_page():
         if st.session_state.page_elements == "key":
             user_input = st.number_input("Insert Key", step = 1, value = None, help = "Insert a number between 0 and 11")
     
-            if user_input is not None:
+            col1, col2, col3, col4, col5, col6, col7, col8 = st.columns(8)
+            with col8:
+                submit_button = st.button("Submit")
+    
+            if submit_button:
                 database = mongo_client["audio_elements_0"]
                 collection = database["song"]
         
@@ -514,7 +554,11 @@ def show_filter_page():
         if st.session_state.page_elements == "loudness":
             user_input = st.number_input("Insert Loudness", step = 0.1, format="%.1f", value = None, help = "Insert a number between -30 and 10")
     
-            if user_input is not None:
+            col1, col2, col3, col4, col5, col6, col7, col8 = st.columns(8)
+            with col8:
+                submit_button = st.button("Submit")
+    
+            if submit_button:
                 database = mongo_client["audio_elements_0"]
                 collection = database["song"]
         
@@ -550,7 +594,11 @@ def show_filter_page():
         if st.session_state.page_elements == "mode":
             user_input = st.number_input("Insert Mode", step = 1, value = None, help = "Insert 0 or 1")
     
-            if user_input is not None:
+            col1, col2, col3, col4, col5, col6, col7, col8 = st.columns(8)
+            with col8:
+                submit_button = st.button("Submit")
+    
+            if submit_button:
                 database = mongo_client["audio_elements_0"]
                 collection = database["song"]
         
@@ -586,7 +634,11 @@ def show_filter_page():
         if st.session_state.page_elements == "speechiness":
             user_input = st.number_input("Insert Speechiness Score", step = 0.01, format="%.2f", value = None, help = "Insert a number between 0 and 1")
     
-            if user_input is not None:
+            col1, col2, col3, col4, col5, col6, col7, col8 = st.columns(8)
+            with col8:
+                submit_button = st.button("Submit")
+    
+            if submit_button:
                 database = mongo_client["audio_elements_0"]
                 collection = database["song"]
         
@@ -622,7 +674,11 @@ def show_filter_page():
         if st.session_state.page_elements == "acousticness":
             user_input = st.number_input("Insert Acousticness Value", step = 0.01, format="%.2f", value = None, help = "Insert a number between 0 and 1")
     
-            if user_input is not None:
+            col1, col2, col3, col4, col5, col6, col7, col8 = st.columns(8)
+            with col8:
+                submit_button = st.button("Submit")
+    
+            if submit_button:
                 database = mongo_client["audio_elements_0"]
                 collection = database["song"]
         
@@ -658,7 +714,11 @@ def show_filter_page():
         if st.session_state.page_elements == "instrumentalness":
             user_input = st.number_input("Insert Instrumentalness Value", step = 0.00001, format="%.5f", value = None, help = "Acceptable values are small (ex: 0.00005)")
     
-            if user_input is not None:
+            col1, col2, col3, col4, col5, col6, col7, col8 = st.columns(8)
+            with col8:
+                submit_button = st.button("Submit")
+    
+            if submit_button:
                 database = mongo_client["audio_elements_0"]
                 collection = database["song"]
         
@@ -694,7 +754,11 @@ def show_filter_page():
         if st.session_state.page_elements == "liveness":
             user_input = st.number_input("Insert Liveness Value", step = 0.01, format="%.2f", value = None, help = "Insert a number between 0 and 1")
     
-            if user_input is not None:
+            col1, col2, col3, col4, col5, col6, col7, col8 = st.columns(8)
+            with col8:
+                submit_button = st.button("Submit")
+    
+            if submit_button:
                 database = mongo_client["audio_elements_0"]
                 collection = database["song"]
         
@@ -730,7 +794,11 @@ def show_filter_page():
         if st.session_state.page_elements == "valence":
             user_input = st.number_input("Insert Valence", step = 0.01, format="%.2f", value = None, help = "Insert a number between 0 and 1")
     
-            if user_input is not None:
+            col1, col2, col3, col4, col5, col6, col7, col8 = st.columns(8)
+            with col8:
+                submit_button = st.button("Submit")
+    
+            if submit_button:
                 database = mongo_client["audio_elements_0"]
                 collection = database["song"]
         
@@ -766,7 +834,11 @@ def show_filter_page():
         if st.session_state.page_elements == "tempo":
             user_input = st.number_input("Insert Tempo", step = 1, value = None, help = "Insert an integer between 80 and 150")
     
-            if user_input is not None:
+            col1, col2, col3, col4, col5, col6, col7, col8 = st.columns(8)
+            with col8:
+                submit_button = st.button("Submit")
+    
+            if submit_button:
                 database = mongo_client["audio_elements_0"]
                 collection = database["song"]
         
@@ -802,7 +874,11 @@ def show_filter_page():
         if st.session_state.page_elements == "time_signature":
             user_input = st.number_input("Insert Time Signature", step = 1, value = None, help = "Insert 3, 4, or 5")
     
-            if user_input is not None:
+            col1, col2, col3, col4, col5, col6, col7, col8 = st.columns(8)
+            with col8:
+                submit_button = st.button("Submit")
+    
+            if submit_button:
                 database = mongo_client["audio_elements_0"]
                 collection = database["song"]
         
@@ -848,9 +924,12 @@ def show_filter_page():
     if st.session_state.show_text_box:
         spotify_ids = st.text_area("Enter Spotify IDs", help = "Keep IDs on different lines")
         spotify_ids_lst = spotify_ids.split("\n")
+        col1, col2, col3, col4, col5, col6, col7, col8 = st.columns(8)
+        with col8:
+            submit_button_link = st.button("Submit", key = "link")
         empty = True
         
-        if spotify_ids:
+        if submit_button_link:
             for spotify_id in spotify_ids_lst:
                 spotify_id = spotify_id.strip()
                 
@@ -868,7 +947,7 @@ def show_filter_page():
                     break
                     
             if not empty:
-                st.markdown("<h1 style='text-align:center;'>Insert Valid IDs</h1>", unsafe_allow_html=True)
+                st.markdown("<h1 style='text-align:center;color:#1DB954'>Insert Valid IDs</h1>", unsafe_allow_html=True)
             else:  
                 for spotify_id in spotify_ids_lst:
                     spotify_id = spotify_id.strip()
