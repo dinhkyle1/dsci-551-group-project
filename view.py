@@ -65,7 +65,7 @@ def display_database(mongo_clients, db_key):
     client = mongo_clients[db_key]
     database = client[db_key]
     collection = database["song"]
-    data = list(collection.find().limit(100))  # Displaying only the first 100 records
+    data = list(collection.find().limit(1000))  # Displaying only the first 1000 records
 
     if data:
         # Define colors for light and dark mode

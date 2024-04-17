@@ -32,20 +32,6 @@ def main():
         for i in range(5):
             st.text("")
         st.markdown("*Our mission is to bridge the gap between data analysts, artists, and music lovers by leveraging advanced comprehensive database management to provide a deeper understanding of modern music trends through metadata insights . Through our user-friendly web application, we aim to empower artists with valuable insights into modern music trends, enabling them to refine their craft and connect with their audience more effectively. Additionally, we strive to provide music enthusiasts with personalized recommendations and a deeper understanding of their musical preferences. By facilitating seamless database analysis and modification, we aspire to enhance the music experience for all stakeholders involved.*")
-        # image_path = "spotify_logo.png"
-        # image = Image.open(image_path)
-        
-        # col1, col2, col3, col4, col5, col6, col7 = st.columns(7)
-        # with col1:
-        #     pass
-        # with col3:
-        #     pass
-        # with col7:
-        #     st.image(image, width=80)
-        # with col2:
-        #     pass
-        # with col4:
-        #     pass
 
     elif page == "View Databases":
         show_view_page()
