@@ -3,6 +3,51 @@ from common_ui import main_header
 from mongo_utils import get_mongo_client
 from pymongo import MongoClient
 
+def apply_custom_styles():
+    """Applies custom styles based on the theme."""
+    current_theme = st.session_state.get('theme', 'light')
+    background_color = "#191414" if current_theme == 'dark' else "#FFFFFF"
+    text_color = "#1DB954"  # Spotify green
+
+    # Apply custom styles
+    st.markdown(f"""
+        <style>
+        html, body, .stApp {{
+            background-color: {background_color} !important;
+        }}
+        .stButton>button {{
+            background-color: {background_color} !important;
+            color: {text_color} !important;
+            border: 1px solid {text_color} !important;
+        }}
+        .stTextInput>div>div>input, .stSelectbox>div>div>div {{
+            color: {text_color} !important;
+            background-color: {background_color} !important;
+        }}
+        .stTextInput>label, .stSelectbox>label, .stNumberInput>label, .stSlider>label {{
+            color: {text_color} !important;
+        }}
+        .stNumberInput>div>div>input, .stTextArea>div>div>textarea {{
+            color: {text_color} !important;
+            background-color: {background_color} !important;
+        }}
+        .stSlider>div>div>div>div {{
+            background-color: {text_color} !important; /* Slider track color */
+        }}
+        .stSlider>div>div>div>div:hover {{
+            box-shadow: 0 0 0 1px {text_color} !important; /* Slider hover state */
+        }}
+        /* Custom styles for specific inputs in dark mode */
+        .stNumberInput input[type="number"] {{
+            background-color: {background_color if current_theme == 'dark' else '#FFFFFF'} !important;
+            color: {text_color} !important;
+        }}
+        </style>
+    """, unsafe_allow_html=True)
+
+
+
+
 def show_crud_operations():
     if "submit_modifications_button_clicked" not in st.session_state:
         st.session_state.submit_modifications_button_clicked = False
