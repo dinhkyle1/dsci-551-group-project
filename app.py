@@ -26,7 +26,7 @@ def main():
 
     # Use the 'page' variable to determine which page to display
     if page == "Home":
-        st.markdown("## Welcome to the Spotify Tracks Management System")
+        st.markdown("<h2 style='color: #1DB954;'>Welcome to the Spotify Tracks Management System</h2>", unsafe_allow_html=True)
         st.markdown("Use the sidebar to navigate through different functionalities.")
     elif page == "View Databases":
         show_view_page()
