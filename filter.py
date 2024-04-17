@@ -303,7 +303,7 @@ def show_filter_page():
     
     if st.session_state.page == "Audio Elements":
         st.session_state.page_metadata = "none"
-        st.markdown("<h1 style='text-align:center;'>Choose the Attribute to Query</h1>", unsafe_allow_html=True)
+        st.markdown("<h1 style='text-align:center;color:#1DB954'>Choose the Attribute to Query</h1>", unsafe_allow_html=True)
         
         for i in range(3):
             st.text("")
