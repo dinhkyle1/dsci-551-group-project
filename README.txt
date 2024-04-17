@@ -40,6 +40,7 @@ filter.py: Contains userability functions for filtering data by specific attribu
 Set up environment: 
 pip install streamlit
 pip install pymongo
+pip install --upgrade pillow
 
 Run application:
 streamlit run app.py
