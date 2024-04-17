@@ -67,6 +67,10 @@ def light_theme_css():
             .css-1yjuwjr {
                 color: var(--primary-color) !important;
             }
+                        .stButton > button {
+                border: 1px solid var(--text-color);
+            }
+            }
             /* Add other selectors and rules for light theme styling as needed */
             /* Specific styles for the search query label and input */
             div[data-baseweb="input"] > div {
