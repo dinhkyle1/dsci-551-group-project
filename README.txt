@@ -30,12 +30,12 @@ pip install --upgrade pillow
 Run application:
 streamlit run app.py
 
-The CRUD Operations page offers a comprehensive toolkit tailored for data managers, facilitating seamless data management and 
-manipulation within MongoDB databases. With functionalities encompassing Create, Read, Update, and Delete operations, data managers 
-can efficiently handle database entries, ensuring data integrity and accessibility. Designed with data managers in mind, the page 
-streamlines the process of interacting with database records, empowering users to insert, modify, or delete data with ease. 
-However, its versatility extends beyond data managers, as it can be utilized by anyone seeking to interact with MongoDB databases 
-for various purposes, including data analysis and exploration.
+The CRUD Operations page offers a comprehensive toolkit tailored for data managers, facilitating seamless data manipulation within 
+MongoDB databases. With functionalities encompassing Create, Read, Update, and Delete operations, data managers can efficiently 
+handle database entries, ensuring data integrity and accessibility. Designed with data managers in mind, the page streamlines the 
+process of interacting with database records, empowering users to insert, modify, or delete data with ease. However, its versatility 
+extends beyond data managers, as it can be utilized by anyone seeking to interact with MongoDB databases for various purposes, 
+including data analysis and exploration.
 
 The Filter Data page caters to a broader audience, primarily targeting end users seeking simplified data exploration and analysis 
 functionalities. With intuitive filtering options, users can effortlessly sift through datasets to extract relevant information 
