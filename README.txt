@@ -3,9 +3,9 @@ DSCI-551-Group-Project/
 ├── app.py               # Main application script to run the entire application
 ├── common_ui.py         # Common UI components (headers, sidebars)
 ├── mongo_utils.py       # MongoDB connection utilities
-├── view.py              # Script for the "View Databases" functionality
-├── modify.py            # Script for the "CRUD Operations" functionality
-└── filter.py            # Script for the "Filter Data" functionality
+├── view.py              # Script for the "View Databases" functionality for Users
+├── modify.py            # Script for the "CRUD Operations" functionality for Data Managers
+└── filter.py            # Script for the "Filter Data" functionality for Users
 
 app.py: This is the main application script. It will import functions from view.py, modify.py, and filter.py 
 to provide the functionality for each section for the Spotify Management System application.
@@ -17,7 +17,7 @@ helps in avoiding repeated code across scripts that need database access.
 
 view.py: Contains functions to view Spotify databases for userability.
 
-modify.py: Contains userability functions of CRUD Operation such as insert, modify, delete data.
+modify.py: Contains data manager functions of CRUD Operation such as insert, modify, delete data.
 
 filter.py: Contains userability functions for filtering data by specific attributes. 
 
