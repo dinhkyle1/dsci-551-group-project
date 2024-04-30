@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-DSCI-551-GROUP-PROJECT/
-=======
 DSCI-551-Group-Project/
->>>>>>> frontend
 │
 ├── app.py               # Main application script to run the entire application
 ├── common_ui.py         # Common UI components (headers, sidebars)
@@ -11,17 +7,6 @@ DSCI-551-Group-Project/
 ├── modify.py            # Script for the "CRUD Operations" functionality
 └── filter.py            # Script for the "Filter Data" functionality
 
-<<<<<<< HEAD
-
-Install:
-pip install streamlit
-pip install pymongo
-
-
-
-To run:
-streamlit run app.py
-=======
 app.py: This is the main application script. It will import functions from view.py, modify.py, and filter.py 
 to provide the functionality for each section for the Spotify Management System application.
 
@@ -45,7 +30,19 @@ pip install --upgrade pillow
 Run application:
 streamlit run app.py
 
->>>>>>> frontend
+The CRUD Operations page offers a comprehensive toolkit tailored for data managers, facilitating seamless data management and 
+manipulation within MongoDB databases. With functionalities encompassing Create, Read, Update, and Delete operations, data managers 
+can efficiently handle database entries, ensuring data integrity and accessibility. Designed with data managers in mind, the page 
+streamlines the process of interacting with database records, empowering users to insert, modify, or delete data with ease. 
+However, its versatility extends beyond data managers, as it can be utilized by anyone seeking to interact with MongoDB databases 
+for various purposes, including data analysis and exploration.
+
+The Filter Data page caters to a broader audience, primarily targeting end users seeking simplified data exploration and analysis 
+functionalities. With intuitive filtering options, users can effortlessly sift through datasets to extract relevant information 
+based on their specific criteria. This user-friendly interface is crafted to accommodate individuals less familiar with database 
+operations, offering a straightforward approach to data exploration without the need for extensive technical expertise. While the 
+page is optimized for end users, its accessibility and ease of use make it suitable for anyone looking to interact with and derive 
+insights from complex datasets, regardless of their level of technical proficiency.
 
 Mongo Connection: 
 MongoClient("mongodb://Dsci-551:Dsci-551@3.18.103.247:27017/")
